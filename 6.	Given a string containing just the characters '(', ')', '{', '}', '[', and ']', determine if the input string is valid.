@@ -1,0 +1,19 @@
+import java.util.*;
+	public class Main
+	{
+	public static void main(String[] args) {
+	    Scanner cs =  new Scanner(System.in);
+	    String s = cs.next();
+		System.out.println(isValid(s));
+	}
+	 public static boolean isValid(String s) {
+        Stack<Character> st = new Stack<>();
+        for(int c:s.toCharArray()){
+            if(c=='(') st.push(')');
+            else if(c=='[') st.push(']');
+            else if(c=='{') st.push('}');
+            else if(st.isEmpty() || c!=st.pop()) return false;
+        }
+        return st.isEmpty();
+    }
+}
