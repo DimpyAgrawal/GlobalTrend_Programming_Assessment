@@ -1,0 +1,4 @@
+@LogExecutionTime
+	public void serve() throws InterruptedException {
+    		Thread.sleep(2000);
+		}
