@@ -1,0 +1,53 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        LRUCache cache = new LRUCache(2);
+        
+        cache.set(1, 10);
+        cache.set(2, 20);
+        System.out.println("Value for the key 1 is " + cache.get(1)); // returns 10
+
+        // Evicts key 2 and stores a key (3) with value 30 in the cache
+        cache.set(3, 30);
+        System.out.println("Value for the key 2 is " + cache.get(2)); // returns -1 
+
+        // Evicts key 1 and stores a key (4) with value 40 in the cache
+        cache.set(4, 40);
+        System.out.println("Value for the key 1 is " + cache.get(1)); // returns -1 
+        System.out.println("Value for the key 3 is " + cache.get(3)); // returns 30
+        System.out.println("Value for the key 4 is " + cache.get(4)); // returns 40
+    }
+}
+class LRUCache {
+    private HashMap<Integer, Integer> cache;
+    private LinkedHashSet<Integer> usage;
+    private int capacity;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.cache = new HashMap<>();
+        this.usage = new LinkedHashSet<>();
+    }
+    
+    public int get(int key) {
+        if (!cache.containsKey(key)) return -1;
+        // Move accessed key to the end to show that it was recently used
+        usage.remove(key);
+        usage.add(key);
+        return cache.get(key);
+    }
+    
+    public void set(int key, int value) {
+        if (cache.containsKey(key)) {
+            // Remove the old to update its position in usage
+            usage.remove(key);
+        } else if (cache.size() >= capacity) {
+            int lruKey = usage.iterator().next();
+            usage.remove(lruKey);
+            cache.remove(lruKey);
+        }
+        cache.put(key, value);
+        usage.add(key);
+    }
+}
+ 
