@@ -1,0 +1,26 @@
+	import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner cs =  new Scanner(System.in);
+	    int n = cs.nextInt();
+	    int[] arr = new int[n];
+	    for(int i=0;i<n;i++) 
+	        arr[i] = cs.nextInt();
+	    int k = cs.nextInt();
+		System.out.println(findKthLargest(arr,k));
+	}
+	 public static int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> q = new  PriorityQueue<Integer>(); 
+        for(int i=0;i<k;i++){
+            q.add(nums[i]);    
+        } 
+        for(int i=k;i<nums.length;i++){
+            if(nums[i]>q.peek()){
+                q.remove();
+                q.add(nums[i]);
+            }
+        }
+        return q.peek();  
+    }
+}
